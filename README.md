@@ -18,34 +18,34 @@ Si te interesa colaborar en proyectos o quieres conocer lo que estoy desarrollan
 
 ## Habilidades
 
-### Lenguajes de programación
-- C++
-- JavaScript
-- TypeScript
-- Python
-- Java
-- SQL
+### Lenguajes de programación :keyboard:
+- **C++** 💻
+- **JavaScript** ✨
+- **TypeScript** 📘
+- **Python** 🐍
+- **Java** ☕
+- **SQL** 📊
 
-### Frameworks y librerías
-- React
-- Node.js
-- Nest.js
-- Scikit-learn
-- NumPy
-- Pandas
+### Frameworks y librerías :package:
+- **React** ⚛️
+- **Node.js** 🟢
+- **Nest.js** 🏠
+- **Scikit-learn** 🔬
+- **NumPy** 🔢
+- **Pandas** 🐼
 
+### Bases de Datos :floppy_disk:
+- **MySQL** 🐬
+- **MongoDB** 🍃
+- **PostgreSQL** 🐘
 
-### Bases de Datos
-- MySQL
-- MongoDB
-- PostgreSQL
+### Herramientas y tecnologías :toolbox:
+- **Git & GitHub** 🐙
+- **Docker** 🐳
+- **CI** 🔄
+- **Arquitectura Hexagonal** ⬡
+- **Algoritmos genéticos** 🧬
 
-### Herramientas y tecnologías
-- Git & GitHub
-- Docker
-- CI
-- Arquitectura Hexagonal
-- Algoritmos genéticos 
 
 
 ## Conéctate conmigo
