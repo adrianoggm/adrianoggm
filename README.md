@@ -1,16 +1,57 @@
-## Hi there 👋
+# ¡Hola! Soy Adriano Garcia Giralda Milena 👋
 
-<!--
-**adrianoggm/adrianoggm** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Actualmente formo parte del equipo de desarrollo en **INNOVASUR**.  
+Si te interesa colaborar en proyectos o quieres conocer lo que estoy desarrollando, ¡conectemos!
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Sobre mí
+
+- 🔭 **Actualmente trabajo en:** INNOVASUR  
+- 🌱 **Estoy aprendiendo:** TypeScript (Nest.js + Angular 19)  
+- 👯 **Busco colaborar en:** Proyectos de IoT, Cloud Computing y Big Data  
+- 💬 **Pregúntame sobre:** Series Temporales y tratamiento de imágenes  
+- 📫 **Cómo contactarme:** [adrianogarciagiraldamilena@gmail.com](mailto:adrianogarciagiraldamilena@gmail.com)  
+- ⚡ **Curiosidad:** Soy un apasionado del deporte y del mundo de la informática  
+
+---
+
+## Habilidades
+
+### Lenguajes de programación
+- C++
+- JavaScript
+- TypeScript
+- Python
+- Java
+- SQL
+
+### Frameworks y librerías
+- React
+- Node.js
+- Nest.js
+- Scikit-learn
+- NumPy
+- Pandas
+
+
+### Bases de Datos
+- MySQL
+- MongoDB
+- PostgreSQL
+
+### Herramientas y tecnologías
+- Git & GitHub
+- Docker
+- CI
+- Arquitectura Hexagonal
+- Algoritmos genéticos 
+
+
+## Conéctate conmigo
+
+- [LinkedIn](linkedin.com/in/adriano-garcía-giralda-milena-7b7a152a9)
+- [Twitter](https://x.com/adrianolol12345)
+---
+
+¡Gracias por visitar mi perfil! Siéntete libre de explorar mis repositorios y de ponerte en contacto para colaborar en proyectos interesantes.
