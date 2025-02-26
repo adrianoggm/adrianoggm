@@ -1,6 +1,6 @@
 # ¡Hola! Soy Adriano Garcia Giralda Milena 👋
 
-Actualmente formo parte del equipo de desarrollo en **INNOVASUR**.  
+Actualmente formo parte del equipo de desarrollo en **INNOVASUR** como FullStack Developer Intern.  
 Si te interesa colaborar en proyectos o quieres conocer lo que estoy desarrollando, ¡conectemos!
 
 ---
