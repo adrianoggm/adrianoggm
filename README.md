@@ -9,7 +9,7 @@ Si te interesa colaborar en proyectos o conocer lo que estoy desarrollando, ¡co
   <table style="border-collapse: collapse; width: 100%; max-width: 900px;">
     <tr>
       <!-- Columna Izquierda: Sobre mí -->
-      <td valign="top" style="padding: 20px; text-align: left; border-right: 1px solid #ddd;">
+      <td valign="top" style="padding: 20px; text-align: left; border-right: 1px solid #ddd; width: calc(50% - 5px);">
         <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">Sobre mí</h3>
         <ul style="list-style: none; padding-left: 0;">
           <li>🔭 <strong>Trabajo en:</strong> INNOVASUR</li>
@@ -36,7 +36,7 @@ Si te interesa colaborar en proyectos o conocer lo que estoy desarrollando, ¡co
         </ul>
       </td>
       <!-- Columna Derecha: Habilidades -->
-      <td valign="top" style="padding: 30px; text-align: left;">
+      <td valign="top" style="padding: 30px; text-align: left; width: calc(50% + 5px);">
         <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">Habilidades</h3>
         <h4 style="margin-top: 15px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Lenguajes de programación</h4>
         <ul style="list-style: none; padding-left: 0;">
@@ -56,10 +56,17 @@ Si te interesa colaborar en proyectos o conocer lo que estoy desarrollando, ¡co
           <li><strong>NumPy</strong> 🔢</li>
           <li><strong>Pandas</strong> 🐼</li>
         </ul>
+        <h4 style="margin-top: 15px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Bases de Datos</h4>
+        <ul style="list-style: none; padding-left: 0;">
+          <li><strong>MySQL</strong> 🐬</li>
+          <li><strong>MongoDB</strong> 🍃</li>
+          <li><strong>PostgreSQL</strong> 🐘</li>
+        </ul>
       </td>
     </tr>
   </table>
 </div>
+
 
 
 ---
