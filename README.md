@@ -1,148 +1,128 @@
 # 👋 Hi, I'm Adriano García-Giralda Milena
 
-💻 **Software Engineer @ INNOVASUR**  
-🎓 **M.Sc. in Computer Engineering — University of Granada**  
-🔬 **Software Engineering · AI · Distributed Systems · Edge Computing**
+💻 **Software Engineer @ INNOVASUR** · 🎓 **M.Sc. in Computer Engineering — University of Granada** · 🔬 **Distributed AI research**
 
-I design and build **data-intensive and intelligent software systems**, from backend services and data pipelines to distributed architectures and AI-powered applications.
+I build the parts that make real-world data useful: third-party integrations, ETL pipelines, event-driven backends, and the infrastructure that keeps them running in production. In the lab, I research federated learning at the edge and what happens to a time series when you turn it into an image.
 
-My work sits at the intersection of **software engineering, data engineering and artificial intelligence**, with a particular interest in systems that need to process, understand and react to real-world data.
+🌐 **Portfolio:** [adrianoggm.github.io](https://adrianoggm.github.io/)
 
 ---
 
-## 🚀 About Me
+## ✍️ How I Work
 
-I'm a **Computer Engineer specialized in Computing and Intelligent Systems**, with a Master's degree in Computer Engineering from the **University of Granada (UGR)**.
+*Field notes: habits I picked up running production systems. I learned most of them the hard way.*
 
-Currently, I work as a **Software Engineer at INNOVASUR**, where I contribute to platforms involving:
+### 1. Production is read-only until proven otherwise
 
-- ⚙️ Backend services and microservice architectures
-- 🔄 ETL and data integration pipelines
-- 📡 IoT and Smart City systems
-- 📨 Event-driven architectures and asynchronous communication
-- 🗄️ Relational, document and time-series databases
-- 🤖 AI and LLM integration into production systems
-- 📊 Data processing and analytics infrastructures
+When something breaks in production, I look before I touch anything. I gather evidence (logs, events, node state, diffs), write down a diagnosis and a proposed fix, and only then change things, with the people who own the system knowing what is about to happen. A fix nobody understood just becomes the next incident.
 
-Alongside my professional work, I am involved in **research around Edge AI, distributed intelligence and machine learning for time-series data**.
+### 2. Verify before shipping, watch while it lands
 
-I enjoy working on problems where software architecture, data and intelligent systems come together.
+A deploy is a checklist. Before applying, I confirm that every artifact the change references exists in the registry, and I run a diff that should show only what I expect to change. During the rollout, I watch it and check which node each pod lands on: a node low on disk will evict your pods while it pulls a 1 GB image. Afterwards, I check the service from the outside. "Pods are Running" is not the same as working.
 
----
+### 3. Narrate the waits
 
-## 🔬 Research & AI
+Rollouts, image pulls and migrations are where incidents hide. I say up front what I'm waiting for and why. I use short timeouts with checks in between, and I report anomalies (evictions, restarts, unexpected diffs) as soon as they appear, not at the end.
 
-My research interests include:
+### 4. Secrets never travel in clear text
 
-- 🧠 **Machine Learning & Deep Learning**
-- 📈 **Time-Series Analysis**
-- 📡 **Edge AI & Edge Computing**
-- 🌐 **Federated & Distributed Learning**
-- 🧩 **Continual and Non-IID Learning**
-- 🔐 **Robustness & Privacy in Distributed AI**
-- 🕸️ **Semantic and Knowledge-Driven Systems**
-- 🤖 **LLMs, RAG and intelligent agents**
+Secrets live encrypted in the repository (SOPS + age) and a script applies them. Passwords go through stdin, never as arguments or into shell history. When I generate a credential, I fill it in and encrypt it in the same command, so a plaintext copy never touches the disk. If a secret has already been committed, it goes on the list to rotate and move to the vault, and that list gets worked.
 
-I collaborate with the **MYDASS research group** within the **OnTheEdge project**, working on real-time stress monitoring and intelligent processing of physiological and contextual data at the edge.
+### 5. Rehearse irreversible changes
 
-I am also researching the transformation of **time series into image representations**, including **Recurrence Plots, Gramian Angular Fields and Markov Transition Fields**, with a focus on their reconstruction, information preservation and downstream machine-learning utility.
+Schema changes can't be rolled back, so they run against a local copy of the database first. I'm just as wary of scripts that stitch migrations together: a single missing trailing newline can silently turn the next statement into a comment.
 
----
+### 6. Write down the traps
 
-## 🌐 Distributed & Federated AI
+Next to every procedure I keep a short list of the gotchas that cost me time:
 
-One of my current projects is **Onion-FL**, an experimental framework for studying federated and distributed learning in hierarchical environments.
+- line endings that break shell scripts
+- certificate files with no trailing newline
+- archive filenames containing `*` that vanish when extracted on Windows
+- key fingerprints that differ only because of CRLF
 
-It explores areas such as:
+The README holds the steps and the notes hold the traps, so the next person (usually future me) doesn't pay for them twice.
 
-- Hierarchical federated learning
-- Non-IID data and client drift
-- SCAFFOLD, FedNova, FedDyn and MOON
-- Robust aggregation and Byzantine attacks
-- Differential privacy
-- Communication constraints and unreliable networks
-- Model personalization
-- Continuous and asynchronous federated learning
-- Reproducible experimentation on real datasets
+### 7. Architecture as a shared vocabulary
 
-The goal is to study not only **model accuracy**, but also how distributed AI behaves under realistic constraints such as heterogeneity, communication failures, privacy requirements and evolving data.
+For backend services I default to **hexagonal architecture + CQRS**, in NestJS/TypeScript and FastAPI/Python. Every service uses the same layers (domain / application / infrastructure / interface), naming, structured logs and README template. I don't do it for purity: it means any teammate can open any service and know where things are.
+
+### 8. Small, traceable changes
+
+Every task follows the same path: ticket, branch, short plan, implementation, verification against real environments, atomic commits, and a merge request that someone can actually review. In deployment repositories I make one commit per changed manifest, so `git log` reads like a changelog.
+
+### 9. Less code, on purpose
+
+Before writing something, I check three things: does it need to exist, do the standard library or the platform already do it, and what is the smallest version that works. When I take a shortcut on purpose, I leave a comment that names its limit and how to upgrade it. That way the simple version reads as a decision, not an oversight.
+
+### 10. Encode what the team knows
+
+I turn recurring procedures into written playbooks that both people and AI coding agents can follow. Examples include onboarding a new tenant, building Power BI reports and semantic models as code on Microsoft Fabric, and producing data-lineage documents for clients. AI multiplies what I can get done, but it doesn't run on autopilot: it follows the same rules as everyone else (production is read-only, verify before applying, no secrets in clear text).
+
+### 11. Be honest about results
+
+The same rules apply in research: honest baselines, statistical tests, and a hunt for leakage before celebrating. When I re-evaluated my own federated-learning prototype, I found no significant federated-vs-centralized difference, and I found data leakage in the dataset. That result is worth more than a nice chart. New research ideas go through an adversarial review that actively looks for prior work that would sink them.
 
 ---
 
-## 🏗️ Software Engineering
+## 🏗️ What I Do
 
-I enjoy designing systems with a strong emphasis on **maintainability, modularity and observability**.
+- **Backend & integrations:** microservices and connectors that turn many different APIs, devices and platforms into reliable products: REST, MQTT, RabbitMQ, event-driven flows.
+- **Data engineering:** ingestion, ETL and time-series storage for IoT and Smart City platforms, plus analytics on Microsoft Fabric and Power BI.
+- **Infrastructure:** containerized services on Docker and Kubernetes (k3s), with GitLab CI/CD, Traefik routing, a private Harbor registry and Grafana observability.
+- **AI in production:** LLM, RAG and agent integrations that keep model interpretation separate from deterministic services and actions the user has authorized.
 
-Some areas I regularly work with:
+---
 
-- 🧱 Clean & Hexagonal Architecture
-- 🌐 REST APIs and microservices
-- 📨 Event-driven architectures
-- 🔄 ETL and data-processing pipelines
-- 📡 IoT ingestion and real-time processing
-- 🐳 Docker and containerized deployments
-- 🧪 Unit, integration and end-to-end testing
-- 🔁 CI/CD workflows
-- 📊 Monitoring and observability
-- 🧩 Modular and extensible software design
+## 🔬 Research
+
+I collaborate with the **MYDASS research group** on the **OnTheEdge project**, working on real-time stress monitoring and on processing physiological and contextual data at the edge.
+
+- **Federated learning under real constraints:** non-IID data, client drift, robust aggregation, differential privacy, unreliable networks, and continual or asynchronous training.
+- **Time series as images:** Recurrence Plots, Gramian Angular Fields and Markov Transition Fields. How much information survives the encoding, whether the original signal can be reconstructed from it, and how useful the image is for downstream ML.
+
+---
+
+## 📂 Selected Projects
+
+| Project | What it is |
+|---|---|
+| [Onion-FL](https://github.com/adrianoggm/Onion-FL) | Hierarchical federated-learning framework and simulator (edge → fog → cloud): SCAFFOLD, FedNova, FedDyn, MOON, Byzantine attacks, differential privacy. |
+| [time-series-image-reconstruction](https://github.com/adrianoggm/time-series-image-reconstruction) | Reproducible benchmark of information loss and signal reconstruction across image encodings of time series. |
+| [flower-basic](https://github.com/adrianoggm/flower-basic) | Flower + MQTT fog-computing prototype, plus the statistical re-evaluation described above. |
+| [FinGuard](https://github.com/adrianoggm/FinGuard) | Voice and text banking assistant (LangGraph) that keeps the LLM away from deterministic logic and authorized actions. |
+| [MoodPal](https://github.com/adrianoggm/MoodPal) | Android wellbeing app built in 48 h. 🥈 2nd prize at HackForGood UGR 2024 (Telefónica Chair), advanced to the national phase. |
+| [FootballHubManager](https://github.com/adrianoggm/footballhubmanager) | FastAPI + React platform for amateur football leagues: players, seasons, standings and player-performance stats. |
+| [TrueBeamControl](https://github.com/adrianoggm/TrueBeamControl) | Streamlit tool for daily quality-control CSVs from a medical linear accelerator (TrueBeam), with tolerance lines. |
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Languages
-
-`Python` · `TypeScript` · `JavaScript` · `C++` · `Java` · `SQL` · `Kotlin`
-
-### Backend & Distributed Systems
-
-`Node.js` · `NestJS` · `REST APIs` · `Microservices` · `RabbitMQ` · `Redis`
-
-### Data Engineering
-
-`ETL Pipelines` · `Data Integration` · `Time-Series Processing` · `Analytics`
-
-### Databases
-
-`PostgreSQL` · `MySQL` · `MongoDB` · `InfluxDB`
-
-### AI & Machine Learning
-
-`PyTorch` · `scikit-learn` · `Time-Series ML` · `Federated Learning` · `RAG` · `LLM Integration`
-
-### Infrastructure & Tooling
-
-`Docker` · `Git` · `GitHub Actions` · `Linux` · `MQTT` · `Grafana`
+| Area | Tools |
+|---|---|
+| Languages | `Python` · `TypeScript` · `JavaScript` · `SQL` · `Java` · `C++` · `Kotlin` |
+| Backend | `NestJS` · `FastAPI` · `Node.js` · `RabbitMQ` · `MQTT` · `Redis` |
+| Data | `MySQL` · `PostgreSQL` · `MongoDB` · `InfluxDB` · `Microsoft Fabric` · `Power BI` |
+| Infrastructure | `Docker` · `Kubernetes (k3s)` · `Helm` · `Traefik` · `Harbor` · `GitLab CI/CD` · `GitHub Actions` · `Grafana` · `SOPS + age` |
+| AI / ML | `PyTorch` · `scikit-learn` · `Flower` · `LangGraph` · `RAG` · `LLM integration` |
 
 ---
 
-## 🧪 What I'm Currently Exploring
+## 🎯 Where I'm Heading
 
-- 🌐 **Federated learning under real-world constraints**
-- 🔄 **Continual learning and evolving data streams**
-- 🧠 **AI systems for physiological and time-series data**
-- 📡 **Edge intelligence and distributed inference**
-- 🕸️ **Semantic architectures for intelligent IoT platforms**
-- 🤖 **LLM-based assistants, RAG and agentic systems**
-- ⚙️ **Scalable event-driven backend architectures**
+I want to keep working where **research meets real-world engineering**: intelligent systems that have to run reliably across distributed, messy environments. I'm also interested in pursuing a **PhD on intelligent and distributed systems**.
 
----
-
-## 🎯 Long-Term Interests
-
-I'm particularly interested in building intelligent systems that combine:
-
-> **AI + distributed systems + data engineering + software architecture**
-
-My long-term goal is to continue working at the intersection of **research and real-world engineering**, contributing to systems where intelligent models need to operate reliably across distributed environments.
-
-I'm also interested in pursuing a **PhD focused on intelligent and distributed systems**.
+Outside the keyboard: sport, football and a good game. I'm competitive, but I care just as much about good teammates and making the next version better.
 
 ---
 
 ## 🌐 Connect with Me
 
 <p align="center">
+  <a href="https://adrianoggm.github.io/">
+    <img src="https://img.shields.io/badge/Portfolio-1f2937?style=for-the-badge&logo=githubpages&logoColor=white" />
+  </a>
   <a href="https://linkedin.com/in/adriano-garcía-giralda-milena-7b7a152a9">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
   </a>
@@ -153,17 +133,6 @@ I'm also interested in pursuing a **PhD focused on intelligent and distributed s
     <img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" />
   </a>
 </p>
-
----
-
-## ⚡ Beyond Code
-
-- 🔍 Curious by nature — I enjoy understanding how systems work from the inside
-- ⚽ Sports have taught me teamwork, consistency and discipline
-- 🔬 I enjoy connecting academic research with practical engineering
-- 🚀 Always interested in challenging technical projects and collaborations
-
----
 
 <p align="center">
   <b>Building intelligent systems from data to deployment.</b>
